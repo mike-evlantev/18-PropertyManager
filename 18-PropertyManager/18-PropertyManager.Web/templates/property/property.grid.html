@@ -1,0 +1,29 @@
+﻿<table class="table table-striped table-responsive">
+    <thead>
+        <tr>
+            <th>Property Name</th>
+            <th>Address 1</th>
+            <th>City</th>
+            <th>State</th>
+            <th>PostCode</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="property in properties">
+            <td>{{property.PropertyName}}</td>
+            <td>{{property.Address.Address1}}</td>
+            <td>{{property.Address.City}}</td>
+            <td>{{property.Address.State}}</td>
+            <td>{{property.Address.PostCode}}</td>
+            <td>
+                <a class="btn btn-info" ng-href="#/property/detail/{{property.PropertyId}}">
+                    <i class="fa fa-pencil-square-o"></i>
+                </a>
+                <a class="btn btn-danger" ng-click="deleteProperty(property)">
+                    <i class="fa fa-times"></i>
+                </a>
+            </td>
+        </tr>
+    </tbody>
+</table>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using _18_PropertyManager.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -18,5 +19,15 @@ namespace _18_PropertyManager.Domain
 
         public virtual ICollection<Lease> Leases { get; set; }
         public virtual ICollection<WorkOrder> WorkOrders { get; set; }
+
+        public void Update(TenantModel modelTenant)
+        {
+            AddressId = modelTenant.AddressId;
+            FirstName = modelTenant.FirstName;
+            LastName = modelTenant.LastName;
+            Telephone = modelTenant.Telephone;
+            EmailAddress = modelTenant.EmailAddress;
+            Address.Update(modelTenant.Address);
+        }
     }
 }

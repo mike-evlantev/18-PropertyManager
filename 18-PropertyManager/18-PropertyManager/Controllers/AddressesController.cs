@@ -55,22 +55,27 @@ namespace _18_PropertyManager.Controllers
         }
         // PUT: api/Addresses/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutAddress(int id, AddressModel address)
+        public IHttpActionResult PutAddress(int id, AddressModel modelAddress)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != address.AddressId)
+            if (id != modelAddress.AddressId)
             {
                 return BadRequest();
             }
             #region
-            //--reference 15-Kanban-API/cardcontroller
-            //var dbAddress = db.Addresses.Find(id);
-            //dbAddress.Update(address);
-            db.Entry(address).State = EntityState.Modified;
+            // to be changed
+            // 1.Grab the entry from the database
+            var dbAddress = db.Addresses.Find(id);
+
+            // 2. Update the entry fetched from the database
+            dbAddress.Update(modelAddress);
+
+            // 3. Mark entry as modified
+            db.Entry(dbAddress).State = EntityState.Modified;
             #endregion
             try
             {
@@ -92,16 +97,21 @@ namespace _18_PropertyManager.Controllers
         }
 
         // POST: api/Addresses
-        [ResponseType(typeof(Address))]
-        public IHttpActionResult PostAddress(Address address)
+        [ResponseType(typeof(AddressModel))]
+        public IHttpActionResult PostAddress(AddressModel address)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Addresses.Add(address);
+            var newAddress = new Address();
+            newAddress.Update(address);            
+
+            db.Addresses.Add(newAddress);
             db.SaveChanges();
+
+            address.AddressId = newAddress.AddressId;
 
             return CreatedAtRoute("DefaultApi", new { id = address.AddressId }, address);
         }

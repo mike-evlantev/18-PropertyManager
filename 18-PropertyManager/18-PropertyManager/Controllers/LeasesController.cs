@@ -40,19 +40,26 @@ namespace _18_PropertyManager.Controllers
 
         // PUT: api/Leases/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutLease(int id, Lease lease)
+        public IHttpActionResult PutLease(int id, LeaseModel modelLease)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != lease.LeaseId)
+            if (id != modelLease.LeaseId)
             {
                 return BadRequest();
             }
 
-            db.Entry(lease).State = EntityState.Modified;
+            // 1. Grab the entry from the database
+            var dbLease = db.Leases.Find(id);
+
+            // 2. Update the entryfetched from the database
+            dbLease.Update(modelLease);
+
+            // 3. Mark entry as modified
+            db.Entry(dbLease).State = EntityState.Modified;
 
             try
             {
@@ -74,16 +81,21 @@ namespace _18_PropertyManager.Controllers
         }
 
         // POST: api/Leases
-        [ResponseType(typeof(Lease))]
-        public IHttpActionResult PostLease(Lease lease)
+        [ResponseType(typeof(LeaseModel))]
+        public IHttpActionResult PostLease(LeaseModel lease)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Leases.Add(lease);
+            var newLease = new Lease();
+            newLease.Update(lease);
+
+            db.Leases.Add(newLease);
             db.SaveChanges();
+
+            lease.LeaseId = newLease.LeaseId;
 
             return CreatedAtRoute("DefaultApi", new { id = lease.LeaseId }, lease);
         }

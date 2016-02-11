@@ -1,0 +1,29 @@
+﻿<form name="LeaseDetailForm">
+    <div class="form-group">
+        <label>Lease Start Date</label>
+        <input type="text" class="form-control" ng-model="lease.StartDate" />
+    </div>
+
+    <div class="form-group">
+        <label>Lease End Date</label>
+        <input type="text" class="form-control" ng-model="lease.EndDate" />
+    </div>
+
+    <div class="form-group">
+        <label>Rent Amount</label>
+        <input type="text" class="form-control" ng-model="lease.RentAmount" />
+    </div>
+
+    <div class="form-group">
+        <label>Rent Frequency</label>
+        <input type="text" class="form-control" ng-model="lease.RentFrequency" />
+    </div>
+
+    <div class="well clearfix">
+        <button class="btn btn-success pull-right" ng-click="saveLease()">
+            Save
+        </button>
+    </div>
+</form>
+
+<pre>{{lease | json}}</pre>

@@ -55,19 +55,24 @@ namespace _18_PropertyManager.Controllers
 
         // PUT: api/Properties/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutProperty(int id, Property property)
+        public IHttpActionResult PutProperty(int id, PropertyModel modelProperty)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != property.PropertyId)
+            if (id != modelProperty.PropertyId)
             {
                 return BadRequest();
             }
 
-            db.Entry(property).State = EntityState.Modified;
+            // 1. Grab entry from database by id
+            var dbProperty = db.Properties.Find(id);
+            // 2. Update entry fetched from the database
+            dbProperty.Update(modelProperty);
+            // 3. Mark entry as modified
+            db.Entry(dbProperty).State = EntityState.Modified;
 
             try
             {

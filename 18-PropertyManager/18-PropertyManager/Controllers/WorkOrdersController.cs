@@ -40,19 +40,24 @@ namespace _18_PropertyManager.Controllers
 
         // PUT: api/WorkOrders/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutWorkOrder(int id, WorkOrder workOrder)
+        public IHttpActionResult PutWorkOrder(int id, WorkOrderModel modelWorkOrder)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != workOrder.WorkOrderId)
+            if (id != modelWorkOrder.WorkOrderId)
             {
                 return BadRequest();
             }
 
-            db.Entry(workOrder).State = EntityState.Modified;
+            // 1. Gran entry from database by ID
+            var dbWorkOrder = db.WorkOrders.Find(id);
+            // 2. Update fetched entry from the database
+            dbWorkOrder.Update(modelWorkOrder);
+            // 3. Mark entry as modified
+            db.Entry(dbWorkOrder).State = EntityState.Modified;
 
             try
             {
@@ -75,15 +80,20 @@ namespace _18_PropertyManager.Controllers
 
         // POST: api/WorkOrders
         [ResponseType(typeof(WorkOrder))]
-        public IHttpActionResult PostWorkOrder(WorkOrder workOrder)
+        public IHttpActionResult PostWorkOrder(WorkOrderModel workOrder)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.WorkOrders.Add(workOrder);
+            var newWorkOrder = new WorkOrder();
+            newWorkOrder.Update(workOrder);
+
+            db.WorkOrders.Add(newWorkOrder);
             db.SaveChanges();
+
+            workOrder.WorkOrderId = newWorkOrder.WorkOrderId;
 
             return CreatedAtRoute("DefaultApi", new { id = workOrder.WorkOrderId }, workOrder);
         }

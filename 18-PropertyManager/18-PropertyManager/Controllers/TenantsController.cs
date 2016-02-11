@@ -56,19 +56,24 @@ namespace _18_PropertyManager.Controllers
 
         // PUT: api/Tenants/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutTenant(int id, Tenant tenant)
+        public IHttpActionResult PutTenant(int id, TenantModel modelTenant)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != tenant.TenantId)
+            if (id != modelTenant.TenantId)
             {
                 return BadRequest();
             }
 
-            db.Entry(tenant).State = EntityState.Modified;
+            // 1. Grab endtry from database by id
+            var dbTenant = db.Tenants.Find(id);
+            // 2. Update entry fetched from the database
+            dbTenant.Update(modelTenant);
+            // 3. Mark entry as modified
+            db.Entry(dbTenant).State = EntityState.Modified;
 
             try
             {
@@ -90,16 +95,21 @@ namespace _18_PropertyManager.Controllers
         }
 
         // POST: api/Tenants
-        [ResponseType(typeof(Tenant))]
-        public IHttpActionResult PostTenant(Tenant tenant)
+        [ResponseType(typeof(TenantModel))]
+        public IHttpActionResult PostTenant(TenantModel tenant)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Tenants.Add(tenant);
+            var newTenant = new Tenant();
+            newTenant.Update(tenant);
+
+            db.Tenants.Add(newTenant);
             db.SaveChanges();
+
+            tenant.TenantId = newTenant.TenantId;
 
             return CreatedAtRoute("DefaultApi", new { id = tenant.TenantId }, tenant);
         }

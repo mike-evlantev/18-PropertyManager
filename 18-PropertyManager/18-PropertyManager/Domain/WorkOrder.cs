@@ -1,4 +1,5 @@
-﻿using System;
+﻿using _18_PropertyManager.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -25,5 +26,15 @@ namespace _18_PropertyManager.Domain
 
         public virtual Property Property { get; set; }
         public virtual Tenant Tenant { get; set; }
+
+        public void Update(WorkOrderModel modelWorkOder)
+        {
+            PropertyId = modelWorkOder.PropertyId;
+            TenantId = modelWorkOder.TenantId;            
+            Description = modelWorkOder.Description;
+            Priority = modelWorkOder.Priority;
+            OpenedDate = modelWorkOder.OpenedDate;
+            ClosedDate = modelWorkOder.ClosedDate;            
+        }
     }
 }
