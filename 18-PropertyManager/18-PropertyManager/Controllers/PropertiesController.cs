@@ -15,6 +15,7 @@ using AutoMapper;
 
 namespace _18_PropertyManager.Controllers
 {
+    [Authorize]
     public class PropertiesController : ApiController
     {
         private PropertyManagerDataContext db = new PropertyManagerDataContext();
@@ -22,14 +23,19 @@ namespace _18_PropertyManager.Controllers
         // GET: api/Properties
         public IEnumerable<PropertyModel> GetProperties()
         {
-            return Mapper.Map<IEnumerable<PropertyModel>>(db.Properties);
+            return Mapper.Map<IEnumerable<PropertyModel>>(
+                db.Properties.Where(p => p.User.UserName == User.Identity.Name)
+                );
         }
 
         // GET: api/Properties/5
         [ResponseType(typeof(PropertyModel))]
         public IHttpActionResult GetProperty(int id)
         {
-            Property property = db.Properties.Find(id);
+            //Property property = db.Properties.Find(id);
+
+            Property property = db.Properties.FirstOrDefault(p => p.User.UserName == User.Identity.Name && p.PropertyId == id);
+
             if (property == null)
             {
                 return NotFound();
@@ -68,7 +74,13 @@ namespace _18_PropertyManager.Controllers
             }
 
             // 1. Grab entry from database by id
-            var dbProperty = db.Properties.Find(id);
+            //var dbProperty = db.Properties.Find(id);
+            Property dbProperty = db.Properties.FirstOrDefault(p => p.User.UserName == User.Identity.Name && p.PropertyId == id);
+            if (dbProperty == null)
+            {
+                return BadRequest();
+
+            }
             // 2. Update entry fetched from the database
             dbProperty.Update(modelProperty);
             // 3. Mark entry as modified
@@ -94,16 +106,21 @@ namespace _18_PropertyManager.Controllers
         }
 
         // POST: api/Properties
-        [ResponseType(typeof(Property))]
-        public IHttpActionResult PostProperty(Property property)
+        [ResponseType(typeof(PropertyModel))]
+        public IHttpActionResult PostProperty(PropertyModel property)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Properties.Add(property);
+            var dbProperty = new Property();
+            dbProperty.User = db.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
+
+            db.Properties.Add(dbProperty);
             db.SaveChanges();
+
+            property.PropertyId = dbProperty.PropertyId;
 
             return CreatedAtRoute("DefaultApi", new { id = property.PropertyId }, property);
         }
@@ -112,7 +129,9 @@ namespace _18_PropertyManager.Controllers
         [ResponseType(typeof(PropertyModel))]
         public IHttpActionResult DeleteProperty(int id)
         {
-            Property property = db.Properties.Find(id);
+            //Property property = db.Properties.Find(id);
+
+            Property property = db.Properties.FirstOrDefault(p => p.User.UserName == User.Identity.Name && p.PropertyId == id);
             if (property == null)
             {
                 return NotFound();

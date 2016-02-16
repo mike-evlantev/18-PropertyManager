@@ -12,10 +12,10 @@
     <tbody>
         <tr ng-repeat="workorder in workorders">
             <td>{{workorder.WorkOrderId}}</td>
-            <td>{{property.Description}}</td>
-            <td>{{property.Priority}}</td>
-            <td>{{property.OpenedDate}}</td>
-            <td>{{property.ClosedDate}}</td>
+            <td>{{workorder.Description}}</td>
+            <td>{{workorder.Priority}}</td>
+            <td>{{workorder.OpenedDate}}</td>
+            <td>{{workorder.ClosedDate}}</td>
             <td>
                 <a class="btn btn-info" ng-href="#/workorder/detail/{{workorder.WorkOrderId}}">
                     <i class="fa fa-pencil-square-o"></i>

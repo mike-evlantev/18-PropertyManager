@@ -1,4 +1,5 @@
 ﻿using _18_PropertyManager.Domain;
+using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -7,7 +8,7 @@ using System.Web;
 
 namespace _18_PropertyManager.Infrastructure
 {
-    public class PropertyManagerDataContext : DbContext
+    public class PropertyManagerDataContext : IdentityDbContext<PropertyManagerUser>
     {
         public PropertyManagerDataContext() : base("PropertyManager")
         {
@@ -66,6 +67,19 @@ namespace _18_PropertyManager.Infrastructure
             //WorkOrder
             //There are no MANY relationships
 
+            modelBuilder.Entity<PropertyManagerUser>()
+                .HasMany(u => u.Properties)
+                .WithRequired(p => p.User)
+                .HasForeignKey(p => p.UserId);
+
+            modelBuilder.Entity<PropertyManagerUser>()
+                .HasMany(u => u.Tenants)
+                .WithRequired(t => t.User)
+                .HasForeignKey(t => t.UserId)
+                .WillCascadeOnDelete(false);
+
+            // This will setup all the relationships for ASP NET Identity
+            base.OnModelCreating(modelBuilder);
         }
     }
 
