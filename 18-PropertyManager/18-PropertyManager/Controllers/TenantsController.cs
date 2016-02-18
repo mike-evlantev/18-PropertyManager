@@ -23,14 +23,15 @@ namespace _18_PropertyManager.Controllers
         // GET: api/Tenants
         public IEnumerable<TenantModel> GetTenants()
         {
-            return Mapper.Map<IEnumerable<TenantModel>>(db.Tenants);
+            return Mapper.Map<IEnumerable<TenantModel>>(db.Tenants.Where(t => t.User.UserName == User.Identity.Name));
         }
 
         // GET: api/Tenants/5
         [ResponseType(typeof(TenantModel))]
         public IHttpActionResult GetTenant(int id)
         {
-            Tenant tenant = db.Tenants.Find(id);
+            Tenant tenant = db.Tenants.FirstOrDefault(t => t.User.UserName == User.Identity.Name && t.TenantId == id);
+            
             if (tenant == null)
             {
                 return NotFound();
@@ -70,7 +71,12 @@ namespace _18_PropertyManager.Controllers
             }
 
             // 1. Grab endtry from database by id
-            var dbTenant = db.Tenants.Find(id);
+            //var dbTenant = db.Tenants.Find(id);
+            Tenant dbTenant = db.Tenants.FirstOrDefault(t => t.User.UserName == User.Identity.Name && t.TenantId == id);
+            if (dbTenant == null)
+            {
+                return BadRequest();
+            }
             // 2. Update entry fetched from the database
             dbTenant.Update(modelTenant);
             // 3. Mark entry as modified
@@ -104,13 +110,13 @@ namespace _18_PropertyManager.Controllers
                 return BadRequest(ModelState);
             }
 
-            var newTenant = new Tenant();
-            newTenant.Update(tenant);
+            var dbTenant = new Tenant();
+            dbTenant.User = db.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
 
-            db.Tenants.Add(newTenant);
+            db.Tenants.Add(dbTenant);
             db.SaveChanges();
 
-            tenant.TenantId = newTenant.TenantId;
+            tenant.TenantId = dbTenant.TenantId;
 
             return CreatedAtRoute("DefaultApi", new { id = tenant.TenantId }, tenant);
         }
@@ -119,7 +125,9 @@ namespace _18_PropertyManager.Controllers
         [ResponseType(typeof(TenantModel))]
         public IHttpActionResult DeleteTenant(int id)
         {
-            Tenant tenant = db.Tenants.Find(id);
+            //Tenant tenant = db.Tenants.Find(id);
+            Tenant tenant = db.Tenants.FirstOrDefault(t => t.User.UserName == User.Identity.Name && t.TenantId == id);
+
             if (tenant == null)
             {
                 return NotFound();

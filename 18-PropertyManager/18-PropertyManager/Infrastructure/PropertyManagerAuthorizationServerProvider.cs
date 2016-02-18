@@ -32,6 +32,7 @@ namespace _18_PropertyManager.Infrastructure
                     context.SetError("invalid_grant", "The username or password is incorrect");
                     return;
                 }
+                // if user was found
                 else
                 {
                     var token = new ClaimsIdentity(context.Options.AuthenticationType);
