@@ -8,6 +8,16 @@ namespace _18_PropertyManager.Domain
 {
     public class Property
     {
+        public Property()
+        {
+
+        }
+        public Property(PropertyModel property)
+        {
+            Address = new Address();
+            this.Update(property);
+        }
+
         public int PropertyId { get; set; }
         public string UserId { get; set; }
         public int? AddressId { get; set; }

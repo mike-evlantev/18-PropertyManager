@@ -172,6 +172,10 @@
     <Compile Include="Migrations\201602082325560_AddedModels.Designer.cs">
       <DependentUpon>201602082325560_AddedModels.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201602182103242_Added Users.cs" />
+    <Compile Include="Migrations\201602182103242_Added Users.Designer.cs">
+      <DependentUpon>201602182103242_Added Users.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AddressModel.cs" />
     <Compile Include="Models\LeaseModel.cs" />
@@ -200,6 +204,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201602082325560_AddedModels.resx">
       <DependentUpon>201602082325560_AddedModels.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602182103242_Added Users.resx">
+      <DependentUpon>201602182103242_Added Users.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

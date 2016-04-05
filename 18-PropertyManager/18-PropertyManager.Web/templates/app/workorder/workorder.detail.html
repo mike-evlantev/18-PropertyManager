@@ -1,27 +1,36 @@
 ﻿<form name="WorkOrderDetailForm">
-    <div class="form-group">
-        <label>Work Order ID</label>
-        <input type="text" class="form-control" ng-model="workorder.WorkOrderId" />
+    <div class="col-md-6">
+        <div class="form-group">
+            <label>Tenant ID</label>
+            <input type="text" class="form-control" ng-model="workorder.TenantId" />
+        </div>
+
+        <div class="form-group">
+            <label>Property ID</label>
+            <input type="text" class="form-control" ng-model="workorder.PropertyId" />
+        </div>
+
+        <div class="form-group">
+            <label>Description</label>
+            <input type="text" class="form-control" ng-model="workorder.Description" />
+        </div>
     </div>
 
-    <div class="form-group">
-        <label>Description</label>
-        <input type="text" class="form-control" ng-model="workorder.Description" />
-    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label>Priority</label>
+            <input type="text" class="form-control" ng-model="workorder.Priority" />
+        </div>
 
-    <div class="form-group">
-        <label>Priority</label>
-        <input type="text" class="form-control" ng-model="workorder.Priority" />
-    </div>
+        <div class="form-group">
+            <label>Opened Date</label>
+            <input type="text" class="form-control" ng-model="workorder.OpenedDate" />
+        </div>
 
-    <div class="form-group">
-        <label>Opened Date</label>
-        <input type="text" class="form-control" ng-model="workorder.OpenedDate" />
-    </div>
-
-    <div class="form-group">
-        <label>Closed Date</label>
-        <input type="text" class="form-control" ng-model="workorder.ClosedDate" />
+        <div class="form-group">
+            <label>Closed Date</label>
+            <input type="text" class="form-control" ng-model="workorder.ClosedDate" />
+        </div>
     </div>
 
     <div class="well clearfix">
@@ -30,5 +39,3 @@
         </button>
     </div>
 </form>
-
-<pre>{{workorder | json}}</pre>

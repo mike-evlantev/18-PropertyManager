@@ -23,7 +23,9 @@ namespace _18_PropertyManager.Controllers
         // GET: api/WorkOrders
         public IEnumerable<WorkOrderModel> GetWorkOrders()
         {
-            return Mapper.Map<IEnumerable<WorkOrderModel>>(db.WorkOrders);
+            return Mapper.Map<IEnumerable<WorkOrderModel>>(
+                db.WorkOrders.Where(wo => wo.Property.User.UserName == User.Identity.Name)
+                );
         }
 
         // GET: api/WorkOrders/5

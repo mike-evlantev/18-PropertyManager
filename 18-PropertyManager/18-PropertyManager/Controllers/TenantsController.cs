@@ -110,7 +110,7 @@ namespace _18_PropertyManager.Controllers
                 return BadRequest(ModelState);
             }
 
-            var dbTenant = new Tenant();
+            var dbTenant = new Tenant(tenant);
             dbTenant.User = db.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
 
             db.Tenants.Add(dbTenant);

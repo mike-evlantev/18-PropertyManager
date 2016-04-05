@@ -114,7 +114,7 @@ namespace _18_PropertyManager.Controllers
                 return BadRequest(ModelState);
             }
 
-            var dbProperty = new Property();
+            var dbProperty = new Property(property);
             dbProperty.User = db.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
 
             db.Properties.Add(dbProperty);

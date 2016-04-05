@@ -23,7 +23,9 @@ namespace _18_PropertyManager.Controllers
         // GET: api/Leases
         public IEnumerable<LeaseModel> GetLeases()
         {
-            return Mapper.Map<IEnumerable<LeaseModel>>(db.Leases);
+            return Mapper.Map<IEnumerable<LeaseModel>>(
+                db.Leases.Where(l => l.Property.User.UserName == User.Identity.Name)
+            );
         }
 
         // GET: api/Leases/5

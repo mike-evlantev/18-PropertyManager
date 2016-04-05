@@ -1,6 +1,12 @@
-﻿<table class="table table-striped table-responsive">
+﻿<a class="btn btn-info" ng-href="#/app/lease/add">
+    <span>Add Lease</span> <i class="fa fa-pencil-square-o"></i>
+</a>
+<table class="table table-striped table-responsive">
     <thead>
         <tr>
+            <th>Lease ID</th>
+            <th>Tenant ID</th>
+            <th>Property ID</th>
             <th>Start Date</th>
             <th>End Date</th>
             <th>Rent Amount</th>
@@ -10,6 +16,9 @@
     </thead>
     <tbody>
         <tr ng-repeat="lease in leases">
+            <td>{{lease.LeaseId}}</td>
+            <td>{{lease.TenantId}}</td>
+            <td>{{lease.PropertyId}}</td>
             <td>{{lease.StartDate}}</td>
             <td>{{lease.StartDate}}</td>
             <td>{{lease.RentAmount}}</td>

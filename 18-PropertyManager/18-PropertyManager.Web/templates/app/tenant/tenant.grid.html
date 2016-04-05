@@ -1,10 +1,18 @@
-﻿<table class="table table-striped table-responsive">
+﻿<a class="btn btn-info" ng-href="#/app/tenant/add">
+    <span>Add Tenant</span> <i class="fa fa-pencil-square-o"></i>
+</a>
+
+<table class="table table-striped table-responsive">
     <thead>
         <tr>
             <th>First Name</th>
             <th>Last Name</th>
             <th>Phone</th>
             <th>Email</th>
+            <th>Address</th>
+            <th>City</th>
+            <th>State</th>
+            <th>ZIP</th>
             <th></th>
         </tr>
     </thead>
@@ -14,6 +22,10 @@
             <td>{{tenant.LastName}}</td>
             <td>{{tenant.Telephone}}</td>
             <td>{{tenant.EmailAddress}}</td>
+            <td>{{tenant.Address.Address1}}</td>
+            <td>{{tenant.Address.City}}</td>
+            <td>{{tenant.Address.State}}</td>
+            <td>{{tenant.Address.PostCode}}</td>
             <td>
                 <a class="btn btn-info" ng-href="#/app/tenant/detail/{{tenant.TenantId}}">
                     <i class="fa fa-pencil-square-o"></i>
