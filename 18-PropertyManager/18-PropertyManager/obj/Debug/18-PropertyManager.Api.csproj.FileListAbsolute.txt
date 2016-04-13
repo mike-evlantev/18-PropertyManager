@@ -29,7 +29,6 @@ C:\dev\18-PropertyManager\18-PropertyManager\18-PropertyManager\bin\Newtonsoft.J
 C:\dev\18-PropertyManager\18-PropertyManager\18-PropertyManager\bin\System.Net.Http.Formatting.xml
 C:\dev\18-PropertyManager\18-PropertyManager\18-PropertyManager\bin\System.Web.Http.xml
 C:\dev\18-PropertyManager\18-PropertyManager\18-PropertyManager\bin\System.Web.Http.WebHost.xml
-C:\dev\18-PropertyManager\18-PropertyManager\18-PropertyManager\obj\Debug\18-PropertyManager.Api.csprojResolveAssemblyReference.cache
 C:\dev\18-PropertyManager\18-PropertyManager\18-PropertyManager\obj\Debug\_18_PropertyManager.Migrations.InitailCreate.resources
 C:\dev\18-PropertyManager\18-PropertyManager\18-PropertyManager\obj\Debug\_18_PropertyManager.Migrations.AddedModels.resources
 C:\dev\18-PropertyManager\18-PropertyManager\18-PropertyManager\obj\Debug\18-PropertyManager.Api.csproj.GenerateResource.Cache
